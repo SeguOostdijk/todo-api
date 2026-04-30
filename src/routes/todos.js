@@ -15,4 +15,11 @@ router.post('/', (req, res) => {
   res.status(201).json(todo);
 });
 
+router.put('/:id', (req, res) => {
+  const id = parseInt(req.params.id);
+  const todo = store.update(id, req.body);
+  if (!todo) return res.status(404).json({ error: 'todo not found' });
+  res.json(todo);
+});
+
 module.exports = router;
