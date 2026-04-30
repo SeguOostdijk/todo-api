@@ -9,6 +9,23 @@ describe('GET /todos', () => {
   });
 });
 
+describe('PUT /todos/:id', () => {
+  it('updates title and completed', async () => {
+    const created = await request(app).post('/todos').send({ title: 'Original' });
+    const id = created.body.id;
+
+    const res = await request(app).put(`/todos/${id}`).send({ title: 'Updated', completed: true });
+    expect(res.status).toBe(200);
+    expect(res.body.title).toBe('Updated');
+    expect(res.body.completed).toBe(true);
+  });
+
+  it('returns 404 for non-existent id', async () => {
+    const res = await request(app).put('/todos/9999').send({ title: 'X' });
+    expect(res.status).toBe(404);
+  });
+});
+
 describe('POST /todos', () => {
   it('creates a todo and returns 201', async () => {
     const res = await request(app).post('/todos').send({ title: 'Aprender GitHub Actions' });
