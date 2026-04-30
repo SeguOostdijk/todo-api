@@ -5,4 +5,10 @@ function getAll() {
   return todos;
 }
 
-module.exports = { getAll };
+function create(title) {
+  const todo = { id: nextId++, title, completed: false };
+  todos.push(todo);
+  return todo;
+}
+
+module.exports = { getAll, create };
