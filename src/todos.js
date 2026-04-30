@@ -19,4 +19,11 @@ function update(id, fields) {
   return todo;
 }
 
-module.exports = { getAll, create, update };
+function remove(id) {
+  const index = todos.findIndex(t => t.id === id);
+  if (index === -1) return false;
+  todos.splice(index, 1);
+  return true;
+}
+
+module.exports = { getAll, create, update, remove };
