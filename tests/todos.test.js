@@ -9,6 +9,21 @@ describe('GET /todos', () => {
   });
 });
 
+describe('DELETE /todos/:id', () => {
+  it('deletes a todo and returns 204', async () => {
+    const created = await request(app).post('/todos').send({ title: 'To delete' });
+    const id = created.body.id;
+
+    const res = await request(app).delete(`/todos/${id}`);
+    expect(res.status).toBe(204);
+  });
+
+  it('returns 404 for non-existent id', async () => {
+    const res = await request(app).delete('/todos/9999');
+    expect(res.status).toBe(404);
+  });
+});
+
 describe('PUT /todos/:id', () => {
   it('updates title and completed', async () => {
     const created = await request(app).post('/todos').send({ title: 'Original' });
